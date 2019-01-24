@@ -53,8 +53,8 @@ all_files_names.each do |path_of_photo|
   min_date_of_file = array_of_dates.compact.min
   folder_name = min_date_of_file.strftime("%Y-%m")
 
-  if path_of_photo.include? folder_name
-    message = "#{File.basename(path_of_photo)} is already in the correct folder!"
+  if File.dirname(path_of_photo).include? folder_name
+    message = "#{File.basename(path_of_photo)} is already in the correct folder (#{folder_name})!"
     puts message
     write_log(message)
     next
@@ -65,7 +65,7 @@ all_files_names.each do |path_of_photo|
   Dir.mkdir(target_directory_of_photo) unless Dir.exist?(target_directory_of_photo)
   FileUtils.mv(path_of_photo, target_directory_of_photo)
 
-  message = "Successfully moved #{File.basename(path_of_photo)} to folder #{folder_name}."
+  message = "Successfully moved #{path_of_photo} to folder #{folder_name}."
   puts message
   write_log(message)
 end
